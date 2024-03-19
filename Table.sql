@@ -1,6 +1,6 @@
 //SQL tabler
 
-Table for Books
+//Table for Books
 CREATE TABLE "Books" (
     "Book_id" INTEGER NOT NULL,
     "Book" text NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE "Books" (
 );
 
 
-Table for Users
+//Table for Users
 CREATE TABLE "Users" (
     "User_id" INTEGER NOT NULL,
     "Name" TEXT,
