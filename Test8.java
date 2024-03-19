@@ -12,13 +12,12 @@ public class Test8 {
     }
 
     public static void menu() {
-        boolean continueMenu = true; // Flag to control menu continuation
         Scanner scanner = new Scanner(System.in);
         Test8 test = new Test8(); // Create an instance of the Test8 class
         Connection conn = null; // Declare Connection variable
 
         try {
-            while (continueMenu) {
+            while (true) {
                 System.out.print("Welcome to the library administrator menu:\n\n"
                         + "Press 0: To close the menu.\n"
                         + "Press 1: To insert data.\n"
