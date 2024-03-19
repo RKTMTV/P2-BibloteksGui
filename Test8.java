@@ -12,9 +12,14 @@ public class Test8 {
     }
 
     public static void menu() {
+    	int sysStop = 0;
         Scanner scanner = new Scanner(System.in);
         Test8 test = new Test8(); // Create an instance of the Test7 class
         Connection conn = null; // Declare Connection variable
+        
+        if(sysStop > 0) {
+        	System.exit(0);
+        }
 
         try {
             while (true) {
@@ -80,7 +85,8 @@ public class Test8 {
                         break;
                     case 0:
                         System.out.print("System Closing...");
-                        return; // Exit the menu loop and end the program
+                        sysStop++;
+                        return;
                     default:
                         System.out.println("\n\tERROR: Invalid input.\n");
                         menu();
