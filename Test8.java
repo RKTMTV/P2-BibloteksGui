@@ -12,17 +12,13 @@ public class Test8 {
     }
 
     public static void menu() {
-    	int sysStop = 0;
+        boolean continueMenu = true; // Flag to control menu continuation
         Scanner scanner = new Scanner(System.in);
-        Test8 test = new Test8(); // Create an instance of the Test7 class
+        Test8 test = new Test8(); // Create an instance of the Test8 class
         Connection conn = null; // Declare Connection variable
-        
-        if(sysStop > 0) {
-        	System.exit(0);
-        }
 
         try {
-            while (true) {
+            while (continueMenu) {
                 System.out.print("Welcome to the library administrator menu:\n\n"
                         + "Press 0: To close the menu.\n"
                         + "Press 1: To insert data.\n"
@@ -85,11 +81,9 @@ public class Test8 {
                         break;
                     case 0:
                         System.out.print("System Closing...");
-                        sysStop++;
-                        return;
+                        System.exit(0);
                     default:
                         System.out.println("\n\tERROR: Invalid input.\n");
-                        menu();
                 }
             }
         } catch (InputMismatchException a) {
@@ -99,6 +93,7 @@ public class Test8 {
             scanner.close(); // Close scanner after menu execution
         }
     }
+
 
     public void insertData(Connection connection) {
     	@SuppressWarnings("resource")
