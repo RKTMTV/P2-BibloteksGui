@@ -13,8 +13,8 @@ public class Test8 {
 
     public static void menu() {
         Scanner scanner = new Scanner(System.in);
-        Test8 test = new Test8(); // Create an instance of the Test8 class
-        Connection conn = null; // Declare Connection variable
+        Test8 test = new Test8();
+        Connection conn = null;
 
         try {
             while (true) {
@@ -26,19 +26,19 @@ public class Test8 {
                         + "Enter number here:");
 
                 int UI1 = scanner.nextInt();
-                scanner.nextLine(); // Consume the newline character
+                scanner.nextLine();
 
                 switch (UI1) {
                     case 1:
                         try {
                             conn = test.conn();
-                            test.insertData(conn); // Call insertData method with the connection object
+                            test.insertData(conn);
                         } catch (SQLException e) {
                             e.printStackTrace();
                         } finally {
                             if (conn != null) {
                                 try {
-                                    conn.close(); // Close the connection
+                                    conn.close();
                                 } catch (SQLException e) {
                                     e.printStackTrace();
                                 }
@@ -54,7 +54,7 @@ public class Test8 {
                         } finally {
                             if (conn != null) {
                                 try {
-                                    conn.close(); // Close the connection
+                                    conn.close();
                                 } catch (SQLException e) {
                                     e.printStackTrace();
                                 }
@@ -64,14 +64,14 @@ public class Test8 {
                     case 3:
                         try {
                             conn = test.conn();
-                            test.printData(conn); // Print data before deletion
-                            test.deleteData(conn); // Call deleteData method with the connection object
+                            test.printData(conn);
+                            test.deleteData(conn);
                         } catch (SQLException e) {
                             e.printStackTrace();
                         } finally {
                             if (conn != null) {
                                 try {
-                                    conn.close(); // Close the connection
+                                    conn.close();
                                 } catch (SQLException e) {
                                     e.printStackTrace();
                                 }
@@ -89,7 +89,7 @@ public class Test8 {
             System.out.println("\n\tERROR: Invalid input.\n");
             menu();
         } finally {
-            scanner.close(); // Close scanner after menu execution
+            scanner.close(); // Close scanner
         }
     }
 
@@ -104,7 +104,7 @@ public class Test8 {
 
             System.out.print("\nEnter author age: ");
             int authorAge = scanner.nextInt();
-            scanner.nextLine(); // Consume the newline character
+            scanner.nextLine();
             
             System.out.print("\nEnter book title: ");
             String bookTitle = scanner.nextLine();
@@ -146,7 +146,7 @@ public class Test8 {
 
                     System.out.println("\nEnter authorID of the record to update: ");
                     int authorID = scanner.nextInt();
-                    scanner.nextLine(); // Consume newline
+                    scanner.nextLine();
 
                     System.out.println("\nEnter new " + columnName + ": ");
                     String newValue = scanner.nextLine();
