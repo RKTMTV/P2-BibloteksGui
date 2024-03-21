@@ -4,7 +4,7 @@ import java.sql.*;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Test8 {
+public class Test9 {
 
     private Connection conn() throws SQLException {
         Connection conn = DriverManager.getConnection("jdbc:sqlite:C:\\Users\\nikol\\Desktop\\2. SEM CCT\\2. Objektorienterede Programmering - Java\\100. P2 Projekt\\Test1\\src\\javaDatabase2.db");
@@ -13,7 +13,7 @@ public class Test8 {
 
     public static void menu() {
         Scanner scanner = new Scanner(System.in);
-        Test8 test = new Test8();
+        Test9 test = new Test9();
         Connection conn = null;
 
         try {
@@ -89,54 +89,59 @@ public class Test8 {
             System.out.println("\n\tERROR: Invalid input.\n");
             menu();
         } finally {
-            scanner.close(); // Close scanner
+            scanner.close();
         }
     }
-
 
     public void insertData(Connection connection) {
     	@SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
 
-        try {
-            System.out.print("\nEnter author name: ");
-            String authorName = scanner.nextLine();
+        System.out.print("\nEnter author name or press 'm' to return to menu: ");
+        String authorName = scanner.nextLine();
 
+        if (authorName.equalsIgnoreCase("m")) {
+            menu();
+        }
+
+        if (authorName.isEmpty()) {
+            System.out.println("\n\tERROR: Author name cannot be empty.\n\n");
+            insertData(connection);
+        }
+
+        try {
             System.out.print("\nEnter author age: ");
             int authorAge = scanner.nextInt();
-            scanner.nextLine();
-            
-            System.out.print("\nEnter book title: ");
+            scanner.nextLine(); // Consume the newline character after reading authorAge
+
+            System.out.print("\nEnter book title (can include numbers and characters): ");
             String bookTitle = scanner.nextLine();
 
-            // Check if the author name is not empty
-            if (!authorName.isEmpty()) {
-                PreparedStatement statement = connection.prepareStatement("INSERT INTO testDatabase (authorName, authorAge, bookTitle) VALUES (?, ?, ?)");
-                statement.setString(1, authorName);
-                statement.setInt(2, authorAge);
-                statement.setString(3, bookTitle);
-                statement.executeUpdate();
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO testDatabase (authorName, authorAge, bookTitle) VALUES (?, ?, ?)");
+            statement.setString(1, authorName);
+            statement.setInt(2, authorAge);
+            statement.setString(3, bookTitle);
+            statement.executeUpdate();
 
-                System.out.println("\nData inserted succesfully.\n");
-                menu();
-            } else {
-                System.out.println("\n\tERROR: Author name cannot be empty.\n\n");
-            }
+            System.out.println("\nData inserted successfully.\n");
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+
     public void updateData(Connection connection) {
         @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
         System.out.print("Choose a specific column to update: "
-                + "\n\n authorName \t authorAge \t bookTitle\n\n"
+                + "\n\n\tauthorID\tauthorName\tauthorAge\tbookTitle\n\n"
+                + "Press 'm' to return to menu.\n\n"
                 + "Write column name here: ");
 
         String columnName = scanner.nextLine();
 
         switch (columnName) {
+        	case "authorID":
             case "authorName":
             case "authorAge":
             case "bookTitle":
@@ -172,6 +177,9 @@ public class Test8 {
                     e.printStackTrace();
                 }
                 break;
+            case "m":
+            	menu();
+            
             default:
                 System.out.println("\n\tERROR: Invalid input.\n");
                 updateData(connection);
@@ -179,14 +187,20 @@ public class Test8 {
     }
 
     public void deleteData(Connection connection) {
-    	@SuppressWarnings("resource")
+        @SuppressWarnings("resource")
         Scanner scanner = new Scanner(System.in);
 
+        System.out.print("\nEnter author ID to delete or press 'm' to return to menu: ");
+        String input = scanner.nextLine();
+
+        if (input.equalsIgnoreCase("m")) {
+            menu();
+            return;
+        }
+
         try {
-            System.out.print("\nEnter author ID to delete: ");
-            int authorID = scanner.nextInt();
-            scanner.nextLine();
-            
+            int authorID = Integer.parseInt(input);
+
             PreparedStatement statement = connection.prepareStatement("DELETE FROM testDatabase WHERE authorID = ?");
             statement.setInt(1, authorID);
             int rowsDeleted = statement.executeUpdate();
@@ -196,6 +210,8 @@ public class Test8 {
             } else {
                 System.out.println("\n\tERROR: Invalid input.\n");
             }
+        } catch (NumberFormatException e) {
+            System.out.println("\n\tERROR: Invalid author ID.\n");
         } catch (SQLException e) {
             e.printStackTrace();
         }
